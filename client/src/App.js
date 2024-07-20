@@ -6,7 +6,11 @@ function App() {
   const [link, setLink] = useState("google.de");
   const [ipInputEmpty, setIpInputEmpty] = useState(false);
   const [ip, setIp] = useState("");
-  const [location, setLocation] = useState("");
+  const [browser, setBrowser] = useState("");
+  const [os, setOs] = useState("");
+  const [device, setDevice] = useState("");
+  const [language, setLanguage] = useState("");
+  const [referrer, setReferrer] = useState("");
 
   const createLink = () => {
     setLink("www.hurrdurr.de/" + randomChar(8));
@@ -28,11 +32,17 @@ function App() {
   const apiCall = async () => {
     try {
       const response = await axios.get(
-        "https://ip-info-server.vercel.app/api/get-ip"
+        "https://ip-info-server.vercel.app/api/get-info"
       );
-      setIp(response.data.ip);
+      const data = response.data;
+      setIp(data.ip);
+      setBrowser(`${data.browser.name} ${data.browser.version}`);
+      setOs(`${data.os.name} ${data.os.version}`);
+      setDevice(data.device.type || "Unknown");
+      setLanguage(data.language);
+      setReferrer(data.referrer);
     } catch (error) {
-      console.error("Error fetching the IP address:", error);
+      console.error("Error fetching the client info:", error);
     }
   };
 
@@ -53,17 +63,48 @@ function App() {
           value={ip}
           readOnly="readonly"
         />
-        <span>Location</span>
+        <span>Browser</span>
         <input
           className={ipInputEmpty ? "valid" : "error"}
           type="text"
           name="telnum"
-          value={location}
+          value={browser}
           readOnly="readonly"
         />
-        <button>Get Info</button>
+        <span>OS</span>
+        <input
+          className={ipInputEmpty ? "valid" : "error"}
+          type="text"
+          name="telnum"
+          value={os}
+          readOnly="readonly"
+        />
+        <span>Device</span>
+        <input
+          className={ipInputEmpty ? "valid" : "error"}
+          type="text"
+          name="telnum"
+          value={device}
+          readOnly="readonly"
+        />
+        <span>Language</span>
+        <input
+          className={ipInputEmpty ? "valid" : "error"}
+          type="text"
+          name="telnum"
+          value={language}
+          readOnly="readonly"
+        />
+        <span>Referrer</span>
+        <input
+          className={ipInputEmpty ? "valid" : "error"}
+          type="text"
+          name="telnum"
+          value={referrer}
+          readOnly="readonly"
+        />
+        <button onClick={apiCall}>Get Client Info</button>
       </div>
-      <button onClick={apiCall}>Get IP Address</button>
     </div>
   );
 }
