@@ -27,7 +27,9 @@ function App() {
 
   const apiCall = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/get-ip");
+      const response = await axios.get(
+        "https://ip-info-server.vercel.app/api/get-ip"
+      );
       setIp(response.data.ip);
     } catch (error) {
       console.error("Error fetching the IP address:", error);
