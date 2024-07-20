@@ -1,16 +1,16 @@
-const http = require("http");
+const cors = require("cors");
+const express = require("express");
 
-const server = http.createServer((req, res) => {
-  const clientIp = req.socket.remoteAddress;
+const app = express();
+app.use(cors());
 
+app.get("/api/get-ip", (req, res) => {
+  const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
   console.log(`Client IP address: ${clientIp}`);
-
-  res.writeHead(200, { "Content-Type": "text/plain" });
-
-  res.end("Hello, your IP address has been logged.");
+  res.json({ ip: clientIp });
 });
 
-const PORT = 3001;
-server.listen(PORT, () => {
+const PORT = 4000;
+app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });

@@ -25,26 +25,13 @@ function App() {
     return result;
   };
 
-  const apiCall = () => {
-    const apiKey = process.env.REACT_APP_API_KEY;
-    axios
-      .get(
-        `https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}&ip_address=2003:d0:973b:4a32:180:57c0:a603:2e27`
-      )
-      .then((response) => {
-        let data = response.data;
-        console.log(data);
-        setIp(data.ip_address);
-        setIpInputEmpty(true);
-        setLocation(data.city);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getIpInfo = () => {
-    // Link to an IP site
+  const apiCall = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/get-ip");
+      setIp(response.data.ip);
+    } catch (error) {
+      console.error("Error fetching the IP address:", error);
+    }
   };
 
   return (
@@ -56,7 +43,7 @@ function App() {
         <button onClick={createLink}>Create link</button>
       </div>
       <div>
-        <span>IP adress</span>
+        <span>IP address</span>
         <input
           className={ipInputEmpty ? "valid" : "error"}
           type="text"
@@ -72,9 +59,9 @@ function App() {
           value={location}
           readOnly="readonly"
         />
-        <button onClick={getIpInfo}>Get Info</button>
+        <button>Get Info</button>
       </div>
-      <button onClick={apiCall}>Get ip_address</button>
+      <button onClick={apiCall}>Get IP Address</button>
     </div>
   );
 }
