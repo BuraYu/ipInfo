@@ -1,24 +1,16 @@
-const express = require("express");
-const axios = require("axios");
-const app = express();
-const port = 3001;
+const http = require("http");
 
-app.get("/api/ipinfo", (req, res) => {
-  const apiKey = process.env.REACT_APP_API_KEY;
-  const ipAddress = "2003:d0:973b:4a32:180:57c0:a603:2e27";
+const server = http.createServer((req, res) => {
+  const clientIp = req.socket.remoteAddress;
 
-  axios
-    .get(
-      `https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}&ip_address=${ipAddress}`
-    )
-    .then((response) => {
-      res.json(response.data);
-    })
-    .catch((error) => {
-      res.status(500).send(error);
-    });
+  console.log(`Client IP address: ${clientIp}`);
+
+  res.writeHead(200, { "Content-Type": "text/plain" });
+
+  res.end("Hello, your IP address has been logged.");
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+const PORT = 3001;
+server.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
