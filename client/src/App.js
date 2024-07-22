@@ -47,6 +47,18 @@ function App() {
     }
   };
 
+  const apiCall2 = async () => {
+    try {
+      const response = await axios.get(
+        "http://ip-api.com/json/2003:D0:973B:4A58:EC2A:9304:1C29:FEED?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query"
+      );
+      const data2 = response.data;
+      console.log(data2);
+    } catch (error) {
+      console.error("Error fetching the client info:", error);
+    }
+  };
+
   const OsConverter = (nameOs, version) => {
     console.log(nameOs);
     console.log(version);
@@ -115,6 +127,7 @@ function App() {
           readOnly="readonly"
         />
         <button onClick={apiCall}>Get Client Info</button>
+        <button onClick={apiCall2}>Get Client Info</button>
       </div>
     </div>
   );
