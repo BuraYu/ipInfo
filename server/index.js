@@ -3,6 +3,7 @@ const cors = require("cors");
 const userAgentParser = require("user-agent-parser");
 
 const app = express();
+console.log(app);
 app.use(cors());
 
 app.get("/api/get-info", (req, res) => {
