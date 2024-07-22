@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #000000;
   margin: 0;
   padding: 0;
   display: flex;
@@ -9,7 +9,7 @@ body {
   height: 100vh;
   box-sizing: border-box;
 }
-
+/* 
 .container {
   background-color: white;
   padding: 20px;
@@ -70,4 +70,17 @@ input.error {
 }
 input.error:focus {
   border: 2px solid darkred;
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+.test {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+span {
+  color: #20c20e;
+  font-family: "Roboto Mono", sans-serif;
 }
