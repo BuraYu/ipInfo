@@ -4,7 +4,7 @@ import axios from "axios";
 
 function App() {
   const [link, setLink] = useState("google.de");
-  const [ipInputEmpty, setIpInputEmpty] = useState(false);
+  const [ipInput, setIpInput] = useState(false);
   const [ip, setIp] = useState("");
   const [browser, setBrowser] = useState("");
   const [os, setOs] = useState("");
@@ -13,7 +13,7 @@ function App() {
   const [referrer, setReferrer] = useState("");
 
   const createLink = () => {
-    setLink("www.hurrdurr.de/" + randomChar(8));
+    setLink("https://ip-info-client.vercel.app/" + randomChar(8));
   };
 
   const randomChar = (length) => {
@@ -37,13 +37,24 @@ function App() {
       const data = response.data;
       setIp(data.ip);
       setBrowser(`${data.browser.name} ${data.browser.version}`);
-      setOs(`${data.os.name} ${data.os.version}`);
+      setOs(OsConverter(data.os.name, data.os.version));
       setDevice(data.device.type || "Unknown");
       setLanguage(data.language);
       setReferrer(data.referrer);
+      setIpInput(true);
     } catch (error) {
       console.error("Error fetching the client info:", error);
     }
+  };
+
+  const OsConverter = (nameOs, version) => {
+    console.log(nameOs);
+    console.log(version);
+    if (version === "NT 10.0") {
+      return "Windows 10";
+    } else if (version === "NT 11.0") {
+      return "Windows 11";
+    } else return nameOs + version;
   };
 
   return (
@@ -57,7 +68,7 @@ function App() {
       <div>
         <span>IP address</span>
         <input
-          className={ipInputEmpty ? "valid" : "error"}
+          className={ipInput ? "valid" : "error"}
           type="text"
           name="telnum"
           value={ip}
@@ -65,7 +76,7 @@ function App() {
         />
         <span>Browser</span>
         <input
-          className={ipInputEmpty ? "valid" : "error"}
+          className={ipInput ? "valid" : "error"}
           type="text"
           name="telnum"
           value={browser}
@@ -73,7 +84,7 @@ function App() {
         />
         <span>OS</span>
         <input
-          className={ipInputEmpty ? "valid" : "error"}
+          className={ipInput ? "valid" : "error"}
           type="text"
           name="telnum"
           value={os}
@@ -81,7 +92,7 @@ function App() {
         />
         <span>Device</span>
         <input
-          className={ipInputEmpty ? "valid" : "error"}
+          className={ipInput ? "valid" : "error"}
           type="text"
           name="telnum"
           value={device}
@@ -89,7 +100,7 @@ function App() {
         />
         <span>Language</span>
         <input
-          className={ipInputEmpty ? "valid" : "error"}
+          className={ipInput ? "valid" : "error"}
           type="text"
           name="telnum"
           value={language}
@@ -97,7 +108,7 @@ function App() {
         />
         <span>Referrer</span>
         <input
-          className={ipInputEmpty ? "valid" : "error"}
+          className={ipInput ? "valid" : "error"}
           type="text"
           name="telnum"
           value={referrer}
