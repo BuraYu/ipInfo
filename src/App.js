@@ -5,23 +5,12 @@ import { useTypewriter, Cursor } from "react-simple-typewriter";
 
 function App() {
   const [status, setStatus] = useState("");
-  const [timezone, setTimezone] = useState("");
-  const [region, setRegion] = useState("");
   const [mobile, setMobile] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
-  const [continent, setContinent] = useState("");
   const [currency, setCurrency] = useState("");
   const [geoLocation, setGeoLocation] = useState("");
   const [ip, setIp] = useState("");
-
-  const [text] = useTypewriter({
-    words: ["Hello", "timezone", "region", "mobile"],
-    loop: false,
-    onLoopDone: () => console.log(`loop completed after 3 runs.`),
-    typeSpeed: 300,
-    delaySpeed: 1000,
-  });
 
   //ip-api 45 uses per minute, throttle after
   const apiCall = async () => {
@@ -31,16 +20,14 @@ function App() {
       );
       const data = response.data;
       setStatus(data.status);
-      setTimezone(data.timezone);
-      setRegion(data.region);
       setMobile(data.mobile);
       setCity(data.city);
       setCountry(data.country);
       setCurrency(data.currency);
-      setContinent(data.continent);
       setGeoLocation(`Latitude: ${data.lat} Longtitude: ${data.lon}`);
       setIp(data.geoLocation);
       setIp(data.query);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching the client info:", error);
     }
@@ -51,6 +38,36 @@ function App() {
     console.log("called once!");
   }, []);
 
+  const apiCallData = [
+    "Hello",
+    "you shouldn't have clicked on the link...",
+    "This was a " + status,
+    mobile ? "So you use your cellphone" : "Not using your cellphone, I see",
+    country + " is a nice country.",
+    "You are from " + city + ", right?",
+    "Maybe you can send me some " + currency + "?",
+    "Since I have your exact location " + geoLocation,
+    "and your ip address " + ip,
+    "clicking the link was a big mistake....",
+  ];
+
+  const [text] = useTypewriter({
+    words: [
+      apiCallData[0],
+      apiCallData[1],
+      apiCallData[2],
+      apiCallData[3],
+      apiCallData[4],
+      apiCallData[5],
+      apiCallData[6],
+      apiCallData[7],
+      apiCallData[8],
+      apiCallData[9],
+    ],
+    loop: false,
+    typeSpeed: 100,
+    delaySpeed: 1000,
+  });
   return (
     // <div className="container">
     //   <div>
