@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
-import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -106,7 +106,13 @@ function App() {
           style={{ height: "500px", width: "500px" }}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Marker position={position} />
+          <CircleMarker
+            center={[clientData.lat, clientData.lon]}
+            radius={100}
+            fillColor="red"
+            color="red"
+            fillOpacity={0.5}
+          />{" "}
           <RecenterMap lat={clientData.lat} lon={clientData.lon} />
         </MapContainer>
       </div>
