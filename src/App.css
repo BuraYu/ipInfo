@@ -9,6 +9,11 @@ body {
   height: 100vh;
   box-sizing: border-box;
 }
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
 /* 
 .container {
   background-color: white;

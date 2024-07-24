@@ -13,9 +13,11 @@ function App() {
     geoLocation: "",
     ip: "",
   });
+
   const url =
     "http://ip-api.com/json/2003:D0:973B:4A58:EC2A:9304:1C29:FEED?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query";
   const [apiCallData, setApiCallData] = useState([]);
+
   //ip-api 45 uses per minute, throttle after
   const apiCall = async () => {
     try {
@@ -65,6 +67,13 @@ function App() {
     <div className="test">
       <span>{text}</span>
       <Cursor cursorColor="#20C20E" />
+      <div className="info">
+        <span>{clientData.city}</span>
+        <span>{clientData.status}</span>
+        <span>{clientData.country}</span>
+        <span>{clientData.currency}</span>
+        <span>{clientData.ip}</span>
+      </div>
     </div>
   );
 }
